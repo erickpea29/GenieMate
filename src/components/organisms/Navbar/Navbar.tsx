@@ -6,7 +6,7 @@ import {
 } from "@headlessui/react";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
