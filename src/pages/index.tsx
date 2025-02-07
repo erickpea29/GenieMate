@@ -1,4 +1,4 @@
-import { Seo, Navbar, SearchHero } from "@/components";
+import { Seo, Navbar, SearchHero, ResponseBuilder } from "@/components";
 
 export default function Home() {
   return (
@@ -7,6 +7,7 @@ export default function Home() {
       <Navbar />
       <SearchHero hasSearched={false}>
         <div>hola</div>
+        <ResponseBuilder></ResponseBuilder>
       </SearchHero>
     </main>
   );
