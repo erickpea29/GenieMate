@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { PillActions } from "@/components/";
 
 export const SearchHero = ({
   children,
@@ -43,6 +44,7 @@ export const SearchHero = ({
           {children}
         </div>
       </div>
+      <PillActions />
     </div>
   );
 };
