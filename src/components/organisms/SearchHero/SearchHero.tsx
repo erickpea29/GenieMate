@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export const SearchHero = ({
   children,
@@ -15,7 +16,8 @@ export const SearchHero = ({
             <div className="flex flex-col items-center justify-center text-center gap-3 ">
               <div>
                 <h1 className="mb-4 font-roboto-mono text-4xl font-black text-[#111111] dark:text-white md:text-6xl">
-                  Improve Your Notes with AI
+                  Improve Your Notes with{" "}
+                  <span className="text-blue-700">AI</span>
                 </h1>
                 <h2 className="mb-4 flex flex-col items-center font-roboto-mono text-xl font-light text-[#111111] dark:text-white">
                   Summarize, organize, and enhance your study materials
@@ -28,7 +30,7 @@ export const SearchHero = ({
               <p className="text-center font-roboto-mono text-xl font-bold text-[#111111] dark:text-white">
                 <span className="inline-flex items-center gap-1">
                   AI-powered summaries to boost your learning efficiency.
-                  <img
+                  <Image
                     src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.gif"
                     alt="✨"
                     width="32"
