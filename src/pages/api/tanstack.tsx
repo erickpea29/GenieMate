@@ -1,20 +1,17 @@
 import React from "react";
-import ReactDOM from 'react-dom/client'
 import {
   QueryClient,
-  QueryClientProvider,
-  useQuery,
+  useQuery
 } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient()
 
 export function Resume() {
     const { isPending, error, data, isFetching } = useQuery({
-        queryKey: ['repoData'],
+        queryKey: ['connectServer'],
         queryFn: async () => {
           const response = await fetch(
-            'http://3.133.111.198:8000/',
+            'http://3.131.56.243:8000/',
           )
           return await response.json()
         },
