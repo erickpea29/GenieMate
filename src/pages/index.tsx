@@ -1,10 +1,10 @@
 import { Seo, Navbar, SearchHero, SearchBar } from "@/components";
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { searchTermAtom } from "@/components/atoms";
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useAtom(searchTermAtom);
 
-  //TODO: Revisar refresh ineccesario en el input
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setSearchTerm(e.target.value);
   };
