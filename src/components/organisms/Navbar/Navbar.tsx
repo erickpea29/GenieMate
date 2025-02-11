@@ -6,13 +6,13 @@ import {
 } from "@headlessui/react";
 import Link from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-// import { useRouter } from "next/router";
+import { ToggleMode } from "@/components";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 export function Navbar() {
   return (
-    <div className="fixed left-0 top-0 z-50 w-full bg-white dark:bg-zinc-950 sm:relative">
+    <div className="fixed left-0 top-0 z-50 w-full bg-white dark:bg-dark-background sm:relative">
       <div className="px-4 py-6 sm:px-12">
         <Disclosure as={"nav"}>
           {({ open }) => (
@@ -27,6 +27,14 @@ export function Navbar() {
                         alt="Genie Mate Logo"
                         width={40}
                         height={40}
+                        className="block dark:hidden"
+                      />
+                      <Image
+                        src="/images/genie-dark.webp"
+                        alt="Genie Mate Logo Dark"
+                        width={40}
+                        height={40}
+                        className="hidden dark:block"
                       />
                       <h2 className="cursor-pointer font-roboto-mono text-2xl font-black">
                         Genie Mate.
@@ -39,9 +47,9 @@ export function Navbar() {
                   </div> */}
                 </div>
                 {/* Right Side User Menu and Action Button */}
-                {/* <div className="hidden items-center gap-8 md:flex">
+                <div className="hidden items-center gap-8 md:flex">
                   <UserMenu />
-                </div> */}
+                </div>
                 <div className="flex space-x-4 md:hidden">
                   {/* <ToggleMode /> */}
                   <DisclosureButton className="text-gray-500 hover:text-gray-700 focus:outline-none">
@@ -63,10 +71,10 @@ export function Navbar() {
                     transition={{ duration: 0.2 }}
                     className="absolute left-0 top-20 z-50 w-full border-t bg-white shadow-lg dark:border-t-zinc-800 dark:bg-zinc-950"
                   >
-                    {/* <div className="mt-4 space-y-4 p-4">
-                      <NavLinks />
+                    <div className="mt-4 space-y-4 p-4">
+                      {/* <NavLinks /> */}
                       <UserMenu />
-                    </div> */}
+                    </div>
                   </motion.div>
                 )}
               </DisclosurePanel>
@@ -90,20 +98,12 @@ export function Navbar() {
 //   </ul>
 // );
 
-// const UserMenu = () => {
-//   const router = useRouter();
-
-//   return (
-//     <ul className="flex flex-col gap-4 sm:flex-row md:items-center md:gap-8">
-//       <li>
-//         <button
-//           className="w-full"
-//           // variant="default"
-//           onClick={() => router.push("/")}
-//         >
-//           <span>{"Home"}</span>
-//         </button>
-//       </li>
-//     </ul>
-//   );
-// };
+const UserMenu = () => {
+  return (
+    <ul className="flex flex-col gap-4 sm:flex-row md:items-center md:gap-8">
+      <li>
+        <ToggleMode />
+      </li>
+    </ul>
+  );
+};
