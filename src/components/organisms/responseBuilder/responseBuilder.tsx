@@ -1,10 +1,7 @@
 import React from "react";
-import {Resume} from "../../../pages/api/tanstack"
-import ReactDOM from 'react-dom/client'
 import {
   QueryClient,
-  QueryClientProvider,
-  useQuery,
+  QueryClientProvider
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
