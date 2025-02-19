@@ -3,13 +3,14 @@ import { useAtom } from "jotai";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useResume } from "@/hooks";
 import { ResumeRequest, ResumeResponse } from "@/models";
-import { searchQueryAtom, responsesAtom } from "@/components";
+import { searchQueryAtom, responsesAtom, searchHeroAtom } from "@/components";
 
 const queryClient = new QueryClient();
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useAtom(searchQueryAtom);
   const [responses, setResponses] = useAtom(responsesAtom);
+  const [searchHero, setSearchHero] = useAtom(searchHeroAtom);
   const { mutate, data, error, isPending } = useResume();
 
   const handleButtonClick = () => {
@@ -22,8 +23,8 @@ export default function Home() {
         setResponses((prevResponses) => [...prevResponses, newResponse]);
       },
     });
-
     setSearchTerm("");
+    setSearchHero(true);
   };
 
   //TODO: Revisar refresh ineccesario en el input
@@ -43,8 +44,8 @@ export default function Home() {
           handleButtonClick={handleButtonClick}
           placeholder="Drop your notes here and let's make them better!..."
         />
-        <ResponseDisplay responses={responses} isPending={isPending} />
       </SearchHero>
+      <ResponseDisplay responses={responses} isPending={isPending} error={error?.message ?? null} onRetry={handleButtonClick}/>
       </QueryClientProvider>
     </main>
   );

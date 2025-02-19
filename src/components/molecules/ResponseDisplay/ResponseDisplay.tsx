@@ -1,26 +1,43 @@
 import React from "react";
 import { ResumeResponse } from "@/models";
-import { cn } from "@/lib/utils";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type Props = {
   responses: ResumeResponse[];
   isPending: boolean;
+  error: string | null;
+  onRetry: () => void;
 };
 
-export const  ResponseDisplay: React.FC<Props> = ({ responses, isPending }) => {
+export const  ResponseDisplay: React.FC<Props> = ({ responses, isPending, error, onRetry }) => {
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 space-y-4">
-      {responses.map((response, index) => (
-        <div key={index} className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
-          <p className="text-sm text-gray-900 dark:text-white">{response.response}</p>
-        </div>
-      ))}
-
-      {isPending && (
-        <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
-          <span className="animate-pulse text-gray-500">Escribiendo...</span>
-        </div>
-      )}
+    <div className="mx-auto mt-4 flex max-w-5xl flex-col items-center justify-center px-4 pt-16 sm:px-12 sm:pt-4">
+      <div className="relative w-full max-w-4xl mx-auto">
+        {isPending && (
+          <div className="p-4 bg-white text-dark rounded-lg shadow-md dark:bg-dark-foreground dark:text-white">
+            <span className="animate-pulse text-white">Generating knowledge...</span>
+          </div>
+        )}
+        {error && (
+          <div className="p-4 bg-white text-dark rounded-lg shadow-md dark:bg-dark-foreground dark:text-white">
+            <p>⚠️ <strong>{error}</strong></p>
+            <button
+              onClick={onRetry}
+              className=" rounded-3xl w-full sm:w-auto px-4 bg-white text-black py-2 text-base flex items-center gap-2 dark:bg-dark-foreground dark:text-white dark:border-gray-500 border-slate-200 hover:bg-slate-200 dark:hover:bg-slate-800"
+            >
+              Retry 🔄
+            </button>
+          </div>
+        )}
+        {!error && responses.map((response, index) => (
+          <div className="p-4 bg-white text-dark rounded-lg shadow-md dark:bg-dark-foreground dark:text-white">
+            <ReactMarkdown className="prose prose-sm dark:prose-invert" remarkPlugins={[remarkGfm]}>
+              {response.response}
+            </ReactMarkdown>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
