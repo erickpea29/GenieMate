@@ -2,8 +2,8 @@ import Head from "next/head";
 
 export const Seo = ({
   title = "GenieMate: Your AI Study Assistant",
-  description = "GenieMate helps students study their notes using AI.",
-  image,
+  description = "GenieMate uses AI to turn your notes into smart study buddies, making learning easier, faster, and way more effective.",
+  image = "/images/genie.webp",
 }: {
   title?: string;
   description?: string;
