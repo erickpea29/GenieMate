@@ -7,10 +7,6 @@ export default function Document() {
       <body className="antialiased">
         <Main />
         <NextScript />
-        <script
-          src="//code.tidio.co/qn6pmkddnvzwcdqynbeu2c0hrejh8dgn.js"
-          async
-        ></script>
       </body>
     </Html>
   );
