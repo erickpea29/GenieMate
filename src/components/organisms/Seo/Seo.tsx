@@ -11,7 +11,6 @@ export const Seo = ({
 }) => {
   //TODO: Add domain and defaultImage
   const siteName = "GenieMate";
-  console.log("image", image);
 
   return (
     <Head>
