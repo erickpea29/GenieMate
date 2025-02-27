@@ -1,4 +1,4 @@
 export interface ResumeRequest {
-    prompt: string;
-    files?: File[];
+    prompt?: string;
+    file?: File;
   }  

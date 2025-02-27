@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://3.131.56.243:8000/api"; 
+// const API_BASE_URL = "http://3.131.56.243:8000/api"; 
+const API_BASE_URL = "http://127.0.0.1:8000/api"; 
 
 type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
 
@@ -6,6 +7,7 @@ interface APIResponse<T> {
   success: boolean;
   data?: T;
   message?: string;
+  headers?: Headers;
 }
 
 export async function fetchData<T>(
@@ -13,18 +15,24 @@ export async function fetchData<T>(
   method: HTTPMethod = "GET",
   data?: unknown,
   customHeaders: Record<string, string> = {}
-): Promise<APIResponse<T>> {
+): Promise<APIResponse<T | Blob>> {
   try {
     const options: RequestInit = {
       method,
       headers: {
-        "Content-Type": "application/json",
-        ...customHeaders, // Allows custom headers (e.g., Authorization token)
+        ...customHeaders,
       },
     };
 
     if (data) {
-      options.body = JSON.stringify(data); // Add body for POST, PUT, DELETE
+      if (data instanceof FormData) {
+        options.body = data;
+      } else {
+        options.body = JSON.stringify(data);
+        options.headers = {
+          "Content-Type": "application/json",
+        }
+      }
     }
 
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, options);
@@ -33,10 +41,17 @@ export async function fetchData<T>(
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
 
+    const contentType = response.headers.get("Content-Type");
+    // 🔥 If the response is a PDF or any binary file, return as Blob
+    if (contentType?.includes("application/pdf")) {
+      const fileBlob = await response.blob();
+      return { success: true, data: fileBlob , headers: response.headers};
+    }
+    // Otherwise, treat it as JSON
     const responseData: T = await response.json();
-    return { success: true, data: responseData };
+    
+    return { success: true, data: responseData , headers : response.headers};
   } catch (error) {
-    console.log(error);
     return { success: false, message: (error as Error).message };
   }
 }

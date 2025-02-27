@@ -36,7 +36,6 @@ export async function fetchData<T>(
     const responseData: T = await response.json();
     return { success: true, data: responseData };
   } catch (error) {
-    console.log(error);
     return { success: false, message: (error as Error).message };
   }
 }

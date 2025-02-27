@@ -3,28 +3,49 @@ import { fetchData } from "@/lib/api";
 import { ResumeRequest, ResumeResponse } from "@/models";
 
 export const useResume = () => {
-  
   return useMutation<ResumeResponse, Error, ResumeRequest>({
     mutationFn: async (requestBody: ResumeRequest) => {
-      const formData = new FormData();
-      formData.append("prompt", requestBody.prompt);
-      if (requestBody.files) {
-        requestBody.files.forEach((file) => {
-          formData.append("files", file);
-        });
-      }
-      const response = await fetchData<ResumeResponse>(
-        "resume",
-        "POST",
-        formData,
-        {"Content-Type": "multipart/form-data"}
-      );
+      if (requestBody.file) {
+        const formData = new FormData();
+        if (requestBody.file) {
+          formData.append("file", requestBody.file);
+        }
+        const response = await fetchData<Blob>(
+          "file_resume",
+          "POST",
+          formData,
+        );
 
-      if (!response.success || !response.data) {
-        throw new Error(response.message || "API request failed");
-      }
+        if (!response.success || !response.data) {
+          throw new Error(response.message || "API request failed");
+        }
 
-      return response.data;
+        // Convert response to Blob
+        const fileBlob = await response.data;
+
+        // Extract filename from response headers
+        const contentDisposition = response.headers!.get("content-disposition");
+        let filename = "download.pdf";
+        if (contentDisposition) {
+          const match = contentDisposition.match(/filename="(.+)"/);
+          if (match && match[1]) filename = match[1];
+        }
+        const resp : ResumeResponse = {message: response.message!,  blob: fileBlob, fileName: filename }
+        return resp;
+      }else {
+        const response = await fetchData<ResumeResponse>(
+          "resume",
+          "POST",
+          requestBody
+        );
+  
+        if (!response.success || !response.data) {
+          throw new Error(response.message || "API request failed");
+        }
+        const resp : ResumeResponse = {message: "", response: (response.data as ResumeResponse).response};
+        return resp;
+      }
+      
     },
   });
 };

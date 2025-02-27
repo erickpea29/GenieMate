@@ -1,6 +1,8 @@
 import { atom } from "jotai";
-import { ResumeResponse } from "@/models";
+import { ResumeRequest, ResumeResponse } from "@/models";
 
-export const searchQueryAtom = atom<string>("");
+export const searchAtom = atom<ResumeRequest>();
 export const responsesAtom = atom<ResumeResponse[]>([]);
-export const searchHeroAtom = atom<boolean>(false);
+export const inputAtom = atom<string>("");
+export const inputFileAtom = atom<File | null>(null);
+
