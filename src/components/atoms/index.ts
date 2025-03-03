@@ -1,3 +1,3 @@
 export * from "./Button";
 export * from "./Badge";
-export * from "./resume";
+export * from "./Resume";

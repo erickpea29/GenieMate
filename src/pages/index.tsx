@@ -1,4 +1,4 @@
-import { Seo, Navbar, SearchHero, SearchBar, ResponseDisplay, FileUploader, inputFileAtom } from "@/components";
+import { Seo, Navbar, SearchHero, SearchBar, ResponseDisplay, inputFileAtom } from "@/components";
 import { useAtom } from "jotai";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useResume } from "@/hooks";
@@ -20,7 +20,7 @@ export default function Home() {
       setRequest(requestData);
       mutate(requestData, {
         onSuccess: (newResponse: ResumeResponse) => {
-          setResponses((prevResponses) => [...prevResponses, newResponse]);
+          setResponses((prevResponses: ResumeResponse[]) => [...prevResponses, newResponse]);
         },
       });
     } else {
@@ -28,7 +28,7 @@ export default function Home() {
       setRequest(requestData);
       mutate(requestData, {
         onSuccess: (newResponse: ResumeResponse) => {
-          setResponses((prevResponses) => [...prevResponses, newResponse]);
+          setResponses((prevResponses: ResumeResponse[]) => [...prevResponses, newResponse]);
         },
       });
     }
